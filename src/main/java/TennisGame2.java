@@ -15,6 +15,39 @@ public class TennisGame2 implements TennisGame
         this.player2Name = player2Name;
     }
 
+    public void P1Scores(){
+        P1points++;
+    }
+
+    public void P2Scores(){
+        P2points++;
+    }
+
+    public void SetP1Score(int points){
+
+        for (int i = 0; i < points; i++)
+        {
+            P1Scores();
+        }
+
+    }
+
+    public void SetP2Score(int points){
+
+        for (int i = 0; i < points; i++)
+        {
+            P2Scores();
+        }
+
+    }
+
+    public void wonPoint(String player) {
+        if (player == "player1")
+            P1Scores();
+        else
+            P2Scores();
+    }
+
     public String getScore(){
         String score = "";
         if (P1points == P2points && P1points < 4)
@@ -100,37 +133,5 @@ public class TennisGame2 implements TennisGame
         }
         return score;
     }
-    
-    public void SetP1Score(int points){
-        
-        for (int i = 0; i < points; i++)
-        {
-            P1Scores();
-        }
-            
-    }
-    
-    public void SetP2Score(int points){
-        
-        for (int i = 0; i < points; i++)
-        {
-            P2Scores();
-        }
-            
-    }
-    
-    public void P1Scores(){
-        P1points++;
-    }
-    
-    public void P2Scores(){
-        P2points++;
-    }
 
-    public void wonPoint(String player) {
-        if (player == "player1")
-            P1Scores();
-        else
-            P2Scores();
-    }
 }
