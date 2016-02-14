@@ -2,8 +2,8 @@ package main.java;
 
 public class TennisGame2 implements TennisGame
 {
-    public int P1points = 0;
-    public int P2points = 0;
+    public int P1points = 0;            //times p1 has scored
+    public int P2points = 0;            //times p2 has scored
     
     public String P1result = "";
     public String P2result = "";
@@ -50,7 +50,7 @@ public class TennisGame2 implements TennisGame
 
     public String getScore(){
         String score = "";
-
+                                //points are minor than 3 in both players
         score = playersAreTied(score);
 
         score = P1hasPointsP2hasNot(score);
@@ -59,6 +59,7 @@ public class TennisGame2 implements TennisGame
         score = P1isWinning(score);
         score = P2isWinning(score);
 
+                                //points are equal or bigger than 3 in both players
         if (P1points == P2points && P1points >=3)
             score = "Deuce";
 
