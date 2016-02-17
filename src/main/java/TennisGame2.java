@@ -7,6 +7,7 @@ public class TennisGame2 implements TennisGame
     
     public String P1result = "";
     public String P2result = "";
+
     private String player1Name;
     private String player2Name;
 
@@ -51,24 +52,19 @@ public class TennisGame2 implements TennisGame
     public String getScore(){
         String score = "";
                                 //points are minor than 3 in both players
-        score = playersAreTied(score);
-
-        score = P1hasPointsP2hasNot(score);
-        score = P2hasPointsP1hasNot(score);
-
-        score = P1isWinning(score);
-        score = P2isWinning(score);
-
+        score = setScoreIfplayersAreTied(score);
+        score = setScoreIfP1hasPointsP2hasNot(score);
+        score = setScoreIfP2hasPointsP1hasNot(score);
+        score = setScoreIfP1isWinning(score);
+        score = setScoreIfP2isWinning(score);
                                 //points are equal or bigger than 3 in both players
-        if (P1points == P2points && P1points >=3)
+        if (P1points == P2points && isFortyOrGreater(P1points))
             score = "Deuce";
 
         if (P1hasAdvantage())
             score = "Advantage player1";
-        
         if (P2hasAdvantage())
             score = "Advantage player2";
-        
         if (P1hasWon())
             score = "Win for player1";
         if (P2hasWon())
@@ -76,7 +72,11 @@ public class TennisGame2 implements TennisGame
         return score;
     }
 
-    private String P2hasPointsP1hasNot(String score) {
+    private static boolean isFortyOrGreater(int playerPoints) {
+        return playerPoints >=3;
+    }
+
+    private String setScoreIfP2hasPointsP1hasNot(String score) {
         if (P2points > 0 && P1points ==0)
         {
             if (P2points ==1)
@@ -85,14 +85,13 @@ public class TennisGame2 implements TennisGame
                 P2result = "Thirty";
             if (P2points ==3)
                 P2result = "Forty";
-
             P1result = "Love";
             score = P1result + "-" + P2result;
         }
         return score;
     }
 
-    private String P1hasPointsP2hasNot(String score) {
+    private String setScoreIfP1hasPointsP2hasNot(String score) {
         if (P1points > 0 && P2points ==0)
         {
             if (P1points ==1)
@@ -108,23 +107,32 @@ public class TennisGame2 implements TennisGame
         return score;
     }
 
+
+    private static boolean isGreaterThanForty(int playerPoints) {
+        return playerPoints >= 4;
+    }
+    
+    private static boolean differenceIsTwoOrGreater(int playerPoints1, int playerPoints2) {
+        return (playerPoints1 - playerPoints2) >= 2;
+    }
+
     private boolean P2hasWon() {
-        return P2points >= 4 && P1points >= 0 && (P2points - P1points) >= 2;
+        return isGreaterThanForty(P2points) && P1points >=0 && differenceIsTwoOrGreater(P2points, P1points);
     }
 
     private boolean P1hasWon() {
-        return P1points >=4 && P2points >=0 && (P1points - P2points)>=2;
+        return isGreaterThanForty(P1points) && P2points >=0 && differenceIsTwoOrGreater(P1points, P2points);
     }
 
     private boolean P2hasAdvantage() {
-        return P2points > P1points && P1points >= 3;
+        return P2points > P1points && isFortyOrGreater(P1points);
     }
 
     private boolean P1hasAdvantage() {
-        return P1points > P2points && P2points >= 3;
+        return P1points > P2points && isFortyOrGreater(P2points);
     }
 
-    private String P1isWinning(String score) {
+    private String setScoreIfP1isWinning(String score) {
         if (P1points > P2points && P1points < 4)
         {
             if (P1points ==2)
@@ -140,7 +148,7 @@ public class TennisGame2 implements TennisGame
         return score;
     }
 
-    private String P2isWinning(String score) {
+    private String setScoreIfP2isWinning(String score) {
         if (P2points > P1points && P2points < 4)
         {
             if (P2points ==2)
@@ -156,7 +164,7 @@ public class TennisGame2 implements TennisGame
         return score;
     }
 
-    private String playersAreTied(String score) {
+    private String setScoreIfplayersAreTied(String score) {
         if (P1points == P2points && P1points < 4)
         {
             if (P1points ==0)
